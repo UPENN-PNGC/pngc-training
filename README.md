@@ -5,7 +5,7 @@ This repository hosts courses, workshops, and training materials affiliated with
 
 ## Course Submission & Approval Process
 
-To submit a new course, please use the [course registration issue template](.github/ISSUE_TEMPLATE/register-course.yml). After submission, a maintainer will review your entry.
+To submit a new course, please see the [registration guide](CONTRIBUTING.md) for instructions. After submission, a maintainer will review your entry.
 
 **Note:** Courses are organized by year and semester. Approved submissions are automatically added to the lists below, and a folder is created for each course.
 
