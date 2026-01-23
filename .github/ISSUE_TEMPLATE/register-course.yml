@@ -23,9 +23,9 @@ body:
       label: Semester
       description: Select the semester.
       options:
-        - Spring
-        - Summer
-        - Fall
+        - "Spring"
+        - "Summer"
+        - "Fall"
     validations:
       required: true
   - type: textarea
@@ -40,8 +40,8 @@ body:
     attributes:
       label: Does this course require a Binder (mybinder.org) environment?
       options:
-        - No
-        - Yes
+        - "No"
+        - "Yes"
     validations:
       required: true
   - type: dropdown
@@ -49,8 +49,8 @@ body:
     attributes:
       label: Would you like a Discussion topic created for this course?
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
       description: Maintainers will manually create a Discussion topic if Yes.
     validations:
       required: true
