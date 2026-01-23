@@ -10,6 +10,7 @@ body:
       description: The full title of the course.
     validations:
       required: true
+
   - type: input
     id: year
     attributes:
@@ -17,6 +18,7 @@ body:
       description: The year the course is offered (e.g., 2026).
     validations:
       required: true
+
   - type: dropdown
     id: semester
     attributes:
@@ -28,6 +30,7 @@ body:
         - "Fall"
     validations:
       required: true
+
   - type: textarea
     id: description
     attributes:
@@ -35,26 +38,18 @@ body:
       description: Brief description of the course content and goals; one sentence (max 150 characters).
     validations:
       required: true
+
   - type: dropdown
     id: binder
     attributes:
       label: Does this course require a Binder (mybinder.org) environment?
       options:
         - "No"
-        - "Yes"
+        - "Python/Jupyter"
+        - "R/RStudio"
     validations:
       required: true
-  - type: dropdown
-    id: binder_env_type
-    attributes:
-      label: What kind of Binder?
-      options:
-        - "Python"
-        - "R"
-      description: Select the environment type for Binder.
-    validations:
-      required: true
-    if: binder == "Yes"
+
   - type: dropdown
     id: discussion
     attributes:
@@ -65,6 +60,7 @@ body:
       description: Maintainers will manually create a Discussion topic if Yes.
     validations:
       required: true
+
   - type: textarea
     id: additional
     attributes:

@@ -132,7 +132,8 @@ def create_course_folder(course):
         with open(readme_path, "w") as f:
             f.write(f"# {course['title']}\n\n{course['description']}\n")
     # If Binder required, copy binder template files
-    if course["binder"].lower() == "yes":
+    binder_choice = course["binder"].strip().lower()
+    if binder_choice.lower() != "no":
         binder_path = os.path.join(folder_path, "binder")
         os.makedirs(binder_path, exist_ok=True)
         template_dir = os.path.join(
@@ -141,8 +142,7 @@ def create_course_folder(course):
             "binder-templates",
         )
 
-        # Map output filenames to template filenames
-        env_type = course.get("binder_env_type", "Python").strip().lower()
+        env_type = binder_choice.split("/")[0]
         file_map = {
             "requirements.txt": "requirements.txt",
             "runtime.txt": f"runtime.txt-{env_type}",
@@ -153,8 +153,8 @@ def create_course_folder(course):
         for target_template_name, env_template_name in file_map.items():
             src = os.path.join(template_dir, env_template_name)
             dst = os.path.join(binder_path, target_template_name)
-        if not os.path.exists(dst):
-            shutil.copyfile(src, dst)
+            if not os.path.exists(dst):
+                shutil.copyfile(src, dst)
 
 
 def main():
