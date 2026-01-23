@@ -21,7 +21,7 @@ Course must be part of an official PNGC Training series.
 - **Year**: Year the course is offered (e.g., 2026)
 - **Semester**: Spring, Summer, or Fall
 - **Contact Email**: For course communication
-- **Binder Requirement**: Indicate if a Binder environment is needed
+- **Binder Requirement**: Indicate if a Binder environment is needed (e.g., for an interactive Jupyter notebook or other dockerized application)
 
 ### Recommended
 
