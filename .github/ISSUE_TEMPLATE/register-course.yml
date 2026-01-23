@@ -1,0 +1,61 @@
+name: Register Course
+description: Submit a new course for inclusion in the PNGC Training repository.
+title: "[Course Registration] <Course Title>"
+labels: [registration, needs review]
+body:
+  - type: input
+    id: course_title
+    attributes:
+      label: Course Title
+      description: The full title of the course.
+    validations:
+      required: true
+  - type: input
+    id: year
+    attributes:
+      label: Year
+      description: The year the course is offered (e.g., 2026).
+    validations:
+      required: true
+  - type: dropdown
+    id: semester
+    attributes:
+      label: Semester
+      description: Select the semester.
+      options:
+        - Spring
+        - Summer
+        - Fall
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Course Description
+      description: Brief description of the course content and goals; one sentence (max 150 characters).
+    validations:
+      required: true
+  - type: dropdown
+    id: binder
+    attributes:
+      label: Does this course require a Binder (mybinder.org) environment?
+      options:
+        - No
+        - Yes
+    validations:
+      required: true
+  - type: dropdown
+    id: discussion
+    attributes:
+      label: Would you like a Discussion topic created for this course?
+      options:
+        - Yes
+        - No
+      description: Maintainers will manually create a Discussion topic if Yes.
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Any other relevant details or links (optional).

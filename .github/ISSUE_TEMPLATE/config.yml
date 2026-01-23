@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: UPENN-PNGC
+    url: https://github.com/UPENN-PNGC
+    about: PNGC GitHub Organization
+  - name: About PNGC 
+    url: https://www.penn-ngc.org/
+    about: PNGC Website
+  - name: Registry Support Discussions
+    url: https://github.com/UPENN-PNGC/pngc-partner-projects/discussions/categories/partner-registry-support
+    about: Ask questions or get help about the PNGC parter project registry

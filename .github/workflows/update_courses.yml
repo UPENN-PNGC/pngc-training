@@ -1,0 +1,67 @@
+name: Update PNGC Training Courses
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  update-courses:
+    if: |
+      contains(github.event.issue.labels.*.name, 'approved') && contains(github.event.issue.labels.*.name, 'registration')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: pip install requests
+
+      - name: Run course update script
+        run: |
+          export GITHUB_TOKEN="${{ steps.app-token.outputs.token }}"
+          python .github/scripts/update_courses.py
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        id: cpr
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          commit-message: "chore: add or update course in README and folders"
+          branch: course-update/${{ github.run_id }}
+          title: "Add or update course in README and folders"
+          body: "Automated course registration update."
+          labels: auto-merge
+
+      - name: Wait for status checks
+        uses: lewagon/wait-on-check-action@v1.3.3
+        with:
+          ref: course-update/${{ github.run_id }}
+          repo-token: ${{ steps.app-token.outputs.token }}
+          wait-interval: 10
+
+      - name: Merge PR with App token
+        if: steps.cpr.outputs.pull-request-url != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: Number('${{ steps.cpr.outputs.pull-request-number }}'),
+              merge_method: 'squash'
+            });
