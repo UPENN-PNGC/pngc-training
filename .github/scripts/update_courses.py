@@ -119,6 +119,8 @@ def add_course_to_readme(course):
 
 
 def create_course_folder(course):
+    import shutil
+
     folder_name = (
         f"{course['semester'].lower()}_{course['year']}_{slugify(course['title'])}"
     )
@@ -129,16 +131,30 @@ def create_course_folder(course):
     if not os.path.exists(readme_path):
         with open(readme_path, "w") as f:
             f.write(f"# {course['title']}\n\n{course['description']}\n")
-    # If Binder required, create binder/ folder with placeholder
+    # If Binder required, copy binder template files
     if course["binder"].lower() == "yes":
         binder_path = os.path.join(folder_path, "binder")
         os.makedirs(binder_path, exist_ok=True)
-        binder_readme = os.path.join(binder_path, "README.md")
-        if not os.path.exists(binder_readme):
-            with open(binder_readme, "w") as f:
-                f.write(
-                    "Binder environment placeholder. Add environment.yml or requirements.txt as needed.\n"
-                )
+        template_dir = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+            ".github",
+            "binder-templates",
+        )
+
+        # Map output filenames to template filenames
+        env_type = course.get("binder_env_type", "Python").strip().lower()
+        file_map = {
+            "requirements.txt": "requirements.txt",
+            "runtime.txt": f"runtime.txt-{env_type}",
+            "README.md": "README.md",
+            "Dockerfile": f"Dockerfile-{env_type}",
+        }
+
+        for target_template_name, env_template_name in file_map.items():
+            src = os.path.join(template_dir, env_template_name)
+            dst = os.path.join(binder_path, target_template_name)
+        if not os.path.exists(dst):
+            shutil.copyfile(src, dst)
 
 
 def main():

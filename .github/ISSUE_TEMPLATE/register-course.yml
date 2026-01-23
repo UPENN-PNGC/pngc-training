@@ -45,6 +45,17 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: binder_env_type
+    attributes:
+      label: What kind of Binder?
+      options:
+        - "Python"
+        - "R"
+      description: Select the environment type for Binder.
+    validations:
+      required: true
+    if: binder == "Yes"
+  - type: dropdown
     id: discussion
     attributes:
       label: Would you like a Discussion topic created for this course?

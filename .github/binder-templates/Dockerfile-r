@@ -1,0 +1,12 @@
+FROM rocker/binder:4.3.1
+
+# Install R packages from requirements.txt if present
+COPY requirements.txt /tmp/requirements.txt
+RUN if [ -s /tmp/requirements.txt ]; then \
+    Rscript -e "pkgs <- readLines('/tmp/requirements.txt'); install.packages(pkgs, repos='https://cloud.r-project.org')"; \
+    fi
+
+# Expose the default notebook port
+EXPOSE 8888
+
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
