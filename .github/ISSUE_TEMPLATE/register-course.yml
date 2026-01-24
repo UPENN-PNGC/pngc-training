@@ -45,8 +45,9 @@ body:
       label: Does this course require a Binder (mybinder.org) environment?
       options:
         - "No"
-        - "Python/Jupyter"
-        - "R/RStudio"
+        - "Jupyter Lab"
+        - "RStudio"
+        - "R Shiny App"
     validations:
       required: true
 

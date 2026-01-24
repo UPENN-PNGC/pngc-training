@@ -127,13 +127,21 @@ def generate_course_readme_contents(course, folder_name):
     """
 
     binder_choice = course["binder"].strip().lower()
-    if binder_choice != "no":
-        binder_section = "No Binder environment provided for this course."
+    if binder_choice == "no":
+        binder_section = "No Binder environment selected for this course."
     else:
+        # Determine urlpath based on environment type
+        if "jupyter" in binder_choice:
+            urlpath = f"lab/tree"
+        elif "rstudio" in binder_choice:
+            urlpath = "rstudio"
+        elif "shiny" in binder_choice:
+            urlpath = "shiny"
+        else:
+            raise ValueError(f"Unrecognized Binder environment type: {binder_choice}")
         binder_section = (
             f"[![Launch Binder](https://mybinder.org/badge_logo.svg)]"
-            f"(https://mybinder.org/v2/gh/{GITHUB_REPO}/HEAD?urlpath=lab/tree/"
-            f"{folder_name}/)"
+            f"(https://mybinder.org/v2/gh/{GITHUB_REPO}/HEAD?urlpath={urlpath}/{folder_name})"
         )
 
     discussion_section = (
@@ -186,19 +194,23 @@ def create_course_folder(course):
             "binder-templates",
         )
 
-        env_type = binder_choice.split("/")[0]
-        file_map = {
-            "requirements.txt": "requirements.txt",
-            "runtime.txt": f"runtime.txt-{env_type}",
-            "README.md": "README.md",
-            "Dockerfile": f"Dockerfile-{env_type}",
-        }
+        # copy README
+        src = os.path.join(template_dir, "README.md")
+        dst = os.path.join(binder_path, "README.md")
+        shutil.copyfile(src, dst)
 
-        for target_template_name, env_template_name in file_map.items():
-            src = os.path.join(template_dir, env_template_name)
-            dst = os.path.join(binder_path, target_template_name)
-            if not os.path.exists(dst):
-                shutil.copyfile(src, dst)
+        is_python_env = "jupyter" in binder_choice.lower()
+        runtime_path = os.path.join(binder_path, "runtime.txt")
+        if not os.path.exists(runtime_path):
+            if is_python_env:
+                with open(runtime_path, "w") as f:
+                    f.write("python-3.12\n")
+            else:
+                from datetime import date
+
+                today = date.today().isoformat()
+                with open(runtime_path, "w") as f:
+                    f.write(f"r-3.6-{today}\n")
 
 
 def main():
