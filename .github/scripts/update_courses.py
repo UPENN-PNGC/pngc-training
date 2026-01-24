@@ -7,6 +7,8 @@ import os
 import re
 import requests
 import unicodedata
+import shutil
+
 
 README_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "README.md"
@@ -118,19 +120,61 @@ def add_course_to_readme(course):
         f.write(updated_content)
 
 
-def create_course_folder(course):
-    import shutil
+def generate_course_readme_contents(course, folder_name):
+    """
+    Generate README.md content for a course folder.
+    Expects course dict and target folder name
+    """
 
+    binder_choice = course["binder"].strip().lower()
+    if binder_choice != "no":
+        binder_section = "No Binder environment provided for this course."
+    else:
+        binder_section = (
+            f"[![Launch Binder](https://mybinder.org/badge_logo.svg)]"
+            f"(https://mybinder.org/v2/gh/{GITHUB_REPO}/HEAD?urlpath=lab/tree/"
+            f"{folder_name}/)"
+        )
+
+    discussion_section = (
+        "[Go to course discussion topic](<discussion-link-placeholder>)"
+    )
+
+    readme_content = f"""# {course['title']}
+    ## Description
+    {course['description']}
+
+    ---
+
+    ## Binder
+    {binder_section}
+
+    ---
+
+    ## Course Materials
+    - *(Notebooks and code will be listed here as they are added)*
+
+    ---
+
+    ## Discussion
+    {discussion_section}
+    """
+    return readme_content
+
+
+def create_course_folder(course):
     folder_name = (
         f"{course['semester'].lower()}_{course['year']}_{slugify(course['title'])}"
     )
     folder_path = os.path.join(COURSES_ROOT, folder_name)
     os.makedirs(folder_path, exist_ok=True)
+
     # Create placeholder README
     readme_path = os.path.join(folder_path, "README.md")
     if not os.path.exists(readme_path):
         with open(readme_path, "w") as f:
-            f.write(f"# {course['title']}\n\n{course['description']}\n")
+            f.write(generate_course_readme_contents(course, folder_name))
+
     # If Binder required, copy binder template files
     binder_choice = course["binder"].strip().lower()
     if binder_choice.lower() != "no":
