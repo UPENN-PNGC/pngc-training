@@ -9,10 +9,22 @@ jobs:
     if: github.event.label.name == 'ready for review' && contains(github.event.issue.labels.*.name, 'registration')
     runs-on: ubuntu-latest
     steps:
+      - name: Generate GitHub App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
       - name: Find related PR
         id: findpr
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           # Find PRs linked to this issue (by branch naming convention or by searching PR bodies)
           ISSUE_NUMBER=${{ github.event.issue.number }}
@@ -27,7 +39,7 @@ jobs:
         env:
           PR_NUMBER: ${{ steps.findpr.outputs.pr_number }}
           REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           # List repo admins/owners (here, just notify @org-admins or a hardcoded list)
           OWNERS="@UPENN-PNGC/owners"
