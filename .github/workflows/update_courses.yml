@@ -43,7 +43,10 @@ jobs:
           commit-message: "chore: add or update course in README and folders"
           branch: course-update/${{ github.run_id }}
           title: "Add or update course in README and folders"
-          body: "Automated course registration update."
+          body: |
+            Automated course registration update.
+
+            Closes #${{ github.event.issue.number }}
 
       - name: Notify submitter of approval and PR
         env:
