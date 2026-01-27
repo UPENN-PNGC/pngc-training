@@ -1,0 +1,14 @@
+##gff-version 3
+##sequence-region chrToy 1 612
+# promoter region added upstream (1-200)
+chrToy	.	promoter	1	200	.	+	.	ID=prom1;Parent=gene1
+chrToy	.	gene	201	560	.	+	.	ID=gene1;Name=toy_gene
+chrToy	.	mRNA	201	560	.	+	.	ID=mRNA1;Parent=gene1;Name=toy_gene_mRNA
+chrToy	.	exon	201	299	.	+	.	ID=exon1;Parent=mRNA1
+chrToy	.	CDS	201	299	.	+	0	ID=cds1;Parent=mRNA1
+chrToy	.	exon	300	399	.	+	.	ID=exon2;Parent=mRNA1
+chrToy	.	CDS	300	399	.	+	0	ID=cds2;Parent=mRNA1
+chrToy	.	exon	400	560	.	+	.	ID=exon3;Parent=mRNA1
+chrToy	.	CDS	400	560	.	+	0	ID=cds3;Parent=mRNA1
+# three_prime_UTR covering remainder of transcript to end of FASTA
+chrToy	.	three_prime_UTR	561	612	.	+	.	Parent=mRNA1
