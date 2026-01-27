@@ -84,61 +84,49 @@ def slugify(text):
 def add_course_to_readme(course):
     with open(README_PATH, "r") as f:
         content = f.read()
-    # Find the year and semester section
     year_header = f"### {course['year']}"
-    semester_header = f"#### {course['semester']}"
-    # If year or semester section does not exist, add it
-    if year_header not in content:
-        # Add year section before the --- separator (or at end if not present)
-        if "\n---" in content:
-            content = content.replace(
-                "\n---",
-                f"\n{year_header}\n\n{semester_header}\n\n- *(No courses yet)*\n\n---",
-            )
-        else:
-            content = (
-                content
-                + f"\n{year_header}\n\n{semester_header}\n\n- *(No courses yet)*\n"
-            )
-    elif semester_header not in content:
-        # Add semester section under the year header
-        content = content.replace(
-            year_header, f"{year_header}\n\n{semester_header}\n\n- *(No courses yet)*"
-        )
+    table_header = "| Semester | Title | Description | Folder |\n|----------|-------|-------------|--------|"
+    # Compose the new row
+    folder_name = (
+        f"{course['semester'].lower()}_{course['year']}_{slugify(course['title'])}"
+    )
+    folder_link = f"[{folder_name}](./{folder_name})"
+    description = course["description"] if course["description"] else ""
+    title = course["title"] if course["title"] else ""
+    semester = course["semester"] if course["semester"] else ""
+    row = f"| {semester} | {title} | {description} | {folder_link} |"
 
-    # Add bullet for the course under the semester
-    pattern = rf"({re.escape(semester_header)}\n)([\s\S]*?)(?=\n#### |\n### |\n---|\Z)"
-    match = re.search(pattern, content)
-    if not match:
-        # As a fallback, try to locate the year header and append the semester block there
+    # If year section does not exist, add it before the ---
+    if year_header not in content:
+        insert_point = content.find("\n---")
+        if insert_point == -1:
+            insert_point = len(content)
+        new_section = f"\n{year_header}\n\n{table_header}\n{row}\n"
+        content = content[:insert_point] + new_section + content[insert_point:]
+    else:
+        # Find the year section and its table
         year_pattern = rf"({re.escape(year_header)}\n)([\s\S]*?)(?=\n### |\n---|\Z)"
         year_match = re.search(year_pattern, content)
-        if year_match:
-            insert_at = year_match.end(1)
-            # Build a semester block
-            semester_block = f"{semester_header}\n\n- *(No courses yet)*\n"
-            content = content[:insert_at] + "\n" + semester_block + content[insert_at:]
-            match = re.search(pattern, content)
-    # If still not found, raise but include debug context
-    if not match:
-        raise Exception(
-            "Semester section not found in README.md after attempted insertion"
+        if not year_match:
+            raise Exception(f"Year section {year_header} not found in README.md")
+        section_start = year_match.start(2)
+        section_end = year_match.end(2)
+        section = content[section_start:section_end]
+        # If table header not present, add it
+        if table_header not in section:
+            section = table_header + "\n" + section.lstrip()
+        # Remove any placeholder row
+        section = re.sub(
+            r"\| (Spring|Summer|Fall)[^|]*\| \\*\(No courses yet\)\\* \| *\| *\|\n",
+            "",
+            section,
         )
-    before = match.group(1)
-    section = match.group(2)
-    # Remove placeholder if present
-    section = re.sub(r"- \*\(No courses yet\)\*\n?", "", section)
-    # Compose bullet
-    bullet = f"- **{course['title']}**: {course['description']}"
-    if course["binder"].lower() == "yes":
-        bullet += " _(Binder)_"
-    if course["additional"]:
-        bullet += f" — {course['additional']}"
-    section += bullet + "\n"
-    # Replace section
-    updated_content = content.replace(before + match.group(2), before + section)
+        # Add the new row
+        section = section.rstrip() + f"\n{row}\n"
+        # Replace the section in content
+        content = content[:section_start] + section + content[section_end:]
     with open(README_PATH, "w") as f:
-        f.write(updated_content)
+        f.write(content)
 
 
 def generate_course_readme_contents(course, folder_name):

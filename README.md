@@ -19,17 +19,8 @@ To submit a new course, please see the [registration guide](CONTRIBUTING.md) for
 
 ### 2026
 
-#### Spring
-
-- *(No courses yet)*
-
-#### Summer
-
-- *(No courses yet)*
-
-#### Fall
-
-- *(No courses yet)*
+| Semester | Title | Description | Folder |
+|----------|-------|-------------|--------|
 
 ---
 
