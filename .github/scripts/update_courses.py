@@ -82,6 +82,7 @@ def slugify(text):
 
 
 def add_course_to_readme(course):
+    print(course)
     with open(README_PATH, "r") as f:
         content = f.read()
     year_header = f"### {course['year']}"
@@ -96,35 +97,29 @@ def add_course_to_readme(course):
     semester = course["semester"] if course["semester"] else ""
     row = f"| {semester} | {title} | {description} | {folder_link} |"
 
-    # If year section does not exist, add it before the ---
-    if year_header not in content:
+    # Regex to match the year section and its table (robust to whitespace)
+    year_table_pattern = (
+        rf"({re.escape(year_header)}\s*\n)"  # year header
+        rf"(\| Semester \| Title \| Description \| Folder \|[\s\S]*?\|[-| ]+\|[\s\S]*?)(?=\n### |\n---|\Z)"
+    )
+    year_match = re.search(year_table_pattern, content)
+    if year_match:
+        section_start = year_match.start(2)
+        section_end = year_match.end(2)
+        section = content[section_start:section_end]
+        # Remove any empty row (just the table header)
+        section = section.rstrip()
+        # Add the new row
+        section = section + f"\n{row}"
+        # Replace the section in content
+        content = content[:section_start] + section + content[section_end:]
+    else:
+        # If year section does not exist, add it before the ---
         insert_point = content.find("\n---")
         if insert_point == -1:
             insert_point = len(content)
         new_section = f"\n{year_header}\n\n{table_header}\n{row}\n"
         content = content[:insert_point] + new_section + content[insert_point:]
-    else:
-        # Find the year section and its table
-        year_pattern = rf"({re.escape(year_header)}\n)([\s\S]*?)(?=\n### |\n---|\Z)"
-        year_match = re.search(year_pattern, content)
-        if not year_match:
-            raise Exception(f"Year section {year_header} not found in README.md")
-        section_start = year_match.start(2)
-        section_end = year_match.end(2)
-        section = content[section_start:section_end]
-        # If table header not present, add it
-        if table_header not in section:
-            section = table_header + "\n" + section.lstrip()
-        # Remove any placeholder row
-        section = re.sub(
-            r"\| (Spring|Summer|Fall)[^|]*\| \\*\(No courses yet\)\\* \| *\| *\|\n",
-            "",
-            section,
-        )
-        # Add the new row
-        section = section.rstrip() + f"\n{row}\n"
-        # Replace the section in content
-        content = content[:section_start] + section + content[section_end:]
     with open(README_PATH, "w") as f:
         f.write(content)
 
