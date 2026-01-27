@@ -160,6 +160,8 @@ def generate_course_readme_contents(course, folder_name):
     ---
 
     ## Binder
+    Binder is a free, cloud-based service that lets you launch interactive Jupyter notebooks and other environments directly from this repository, with no local installation required. Use the button below to launch a ready-to-use environment for this course.
+
     {binder_section}
 
     ---

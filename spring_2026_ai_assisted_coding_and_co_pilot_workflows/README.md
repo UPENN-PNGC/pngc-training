@@ -8,6 +8,8 @@ AI-assisted coding tools like Copilot, ChatGPT, and Claude can significantly enh
 
 ## Binder
 
+Binder is a free, cloud-based service that lets you launch interactive Jupyter notebooks and other environments directly from this repository, with no local installation required. Use the button below to launch a ready-to-use environment for this course.
+
 [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/UPENN-PNGC/pngc-training/HEAD?urlpath=lab/tree/spring_2026_ai_assisted_coding_and_co_pilot_workflows)
 
 ---
