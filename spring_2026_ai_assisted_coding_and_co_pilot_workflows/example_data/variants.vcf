@@ -1,0 +1,28 @@
+##fileformat=VCFv4.2
+##fileDate=20260127
+##reference=reference.fasta
+##contig=<ID=chrToy,length=667>
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
+##FILTER=<ID=PASS,Description="All filters passed">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample1
+chrToy	31	Toy:31:T:G	T	G	60	PASS	DP=96	GT	0/1
+chrToy	63	Toy:63:T:A	T	A	20	LowQual	DP=73	GT	0/1
+chrToy	95	Toy:95:C:A	C	A	40	PASS	DP=13	GT	0/1
+chrToy	127	Toy:127:G:C	G	C	60	PASS	DP=16	GT	0/1
+chrToy	158	Toy:158:C:T	C	T	30	PASS	DP=16	GT	0/1
+chrToy	190	Toy:190:A:ATAG	A	ATAG	60	PASS	DP=82	GT	0/1
+chrToy	222	Toy:222:T:C	T	C	30	PASS	DP=61	GT	0/1
+chrToy	254	Toy:254:T:C	T	C	60	PASS	DP=66	GT	0/1
+chrToy	285	Toy:285:CGC:C	CGC	C	30	PASS	DP=63	GT	0/1
+chrToy	317	Toy:317:G:T	G	T	20	LowQual	DP=96	GT	0/1
+chrToy	349	Toy:349:T:G	T	G	30	PASS	DP=35	GT	0/1
+chrToy	381	Toy:381:G:A	G	A	60	PASS	DP=43	GT	0/1
+chrToy	412	Toy:412:T:TCCA	T	TCCA	60	PASS	DP=97	GT	0/1
+chrToy	444	Toy:444:A:C	A	C	40	PASS	DP=92	GT	0/1
+chrToy	476	Toy:476:GCC:G	GCC	G	60	PASS	DP=76	GT	0/1
+chrToy	508	Toy:508:C:A	C	A	40	PASS	DP=73	GT	0/1
+chrToy	539	Toy:539:C:G	C	G	60	PASS	DP=77	GT	0/1
+chrToy	571	Toy:571:C:CGAC	C	CGAC	20	LowQual	DP=83	GT	0/1
+chrToy	603	Toy:603:C:G	C	G	20	LowQual	DP=88	GT	0/1
+chrToy	635	Toy:635:CTG:C	CTG	C	30	PASS	DP=97	GT	0/1
