@@ -56,7 +56,7 @@ jobs:
           PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
           BRANCH_NAME: course-update/${{ github.run_id }}
         run: |
-          COMMENT_BODY="Hi @${ISSUE_CREATOR}, your course registration has been **approved**!\n\nA branch (${BRANCH_NAME}) and a pull request have been created: ${PR_URL}\n\nTo add your course materials, you can check out the branch locally:\n\ngit fetch origin ${BRANCH_NAME}\ngit checkout ${BRANCH_NAME}\n\nPlease add your course materials to the new folder and update the PR as needed. When ready, set the label to \"ready for review\".\n\nThank you!"
+          COMMENT_BODY="Hi @${ISSUE_CREATOR}, your course registration has been **approved**!\n\nA branch (${BRANCH_NAME}) and a pull request have been created: ${PR_URL}\n\nTo add your course materials, you can check out the branch locally:\n\ngit fetch origin ${BRANCH_NAME}\ngit checkout ${BRANCH_NAME}\n\nPlease add your course materials to the new folder and update the PR as needed.\n\n**When you are finished submitting your course materials, please add the 'ready for review' label to this issue.** This will notify the maintainers to review and merge your course.\n\nThank you!"
           curl -s -X POST \
             -H "Authorization: Bearer ${GITHUB_TOKEN}" \
             -H "Accept: application/vnd.github+json" \
