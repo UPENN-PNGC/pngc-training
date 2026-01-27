@@ -1,0 +1,10 @@
+reference_length=412
+exon_ranges=[(1, 99), (100, 199), (200, 360)]
+exon_lengths=[99, 100, 161]
+cds_length=360
+start_codon=ATG
+stop_codon=TGA
+is_start_codon=True
+is_stop_codon=True
+protein_length=120
+protein_ends_with_stop=False
