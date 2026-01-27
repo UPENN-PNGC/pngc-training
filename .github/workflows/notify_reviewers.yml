@@ -6,7 +6,7 @@ on:
 
 jobs:
   notify-reviewers:
-    if: github.event.label.name == 'ready for review'
+    if: github.event.label.name == 'ready for review' && contains(github.event.issue.labels.*.name, 'registration')
     runs-on: ubuntu-latest
     steps:
       - name: Find related PR
