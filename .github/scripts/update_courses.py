@@ -47,8 +47,8 @@ def get_most_recent_registration_issue():
 def parse_issue_body(body):
     # Extract fields from GitHub issue forms (markdown headings)
     def extract(field):
-        # Match '**Field Name**' followed by value (possibly multiline, until next bold or end)
-        pattern = rf"\*\*{re.escape(field)}\*\*\s*\n+([\s\S]*?)(?=\n\*\*|\Z)"
+        # Match '### Field Name' followed by value (possibly multiline, until next heading or end)
+        pattern = rf"### {re.escape(field)}\s*\n+([\s\S]*?)(?=\n### |\Z)"
         match = re.search(pattern, body, re.IGNORECASE)
         if match:
             value = match.group(1).strip()
