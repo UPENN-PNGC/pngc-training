@@ -1,0 +1,35 @@
+name: Notify Reviewers When Course PR Ready
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  notify-reviewers:
+    if: github.event.label.name == 'ready for review'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find related PR
+        id: findpr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Find PRs linked to this issue (by branch naming convention or by searching PR bodies)
+          ISSUE_NUMBER=${{ github.event.issue.number }}
+          PR_JSON=$(gh pr list --state open --json number,headRefName,body --jq ".[] | select(.body | test(\"${ISSUE_NUMBER}\"))")
+          if [ -z "$PR_JSON" ]; then
+            echo "No open PR found for issue $ISSUE_NUMBER" >&2
+            exit 1
+          fi
+          PR_NUMBER=$(echo "$PR_JSON" | jq -r '.number')
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+      - name: Notify repo owners
+        env:
+          PR_NUMBER: ${{ steps.findpr.outputs.pr_number }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # List repo admins/owners (here, just notify @org-admins or a hardcoded list)
+          OWNERS="@UPENN-PNGC/owners"
+          COMMENT_BODY="${OWNERS} The course PR #${PR_NUMBER} is ready for review. Please review and merge if appropriate."
+          gh pr comment $PR_NUMBER --repo $REPO --body "$COMMENT_BODY"

@@ -11,7 +11,7 @@
    - Ensure the issue also has the `registration` label (set by the issue template).
 
 3. **Close the issue:**
-   - Closing an issue with both `approved` and `registration` labels will automatically trigger the workflow to add the course to the README and create the course folder.
+   - Closing an issue with both `approved` and `registration` labels will automatically trigger the workflow to create a new branch, add the course to the README and create the course folder.  
    - If this does not occur, check the `Actions` tab to investigate why the automation may have failed.
   
 4. **Create the discussion topic:**

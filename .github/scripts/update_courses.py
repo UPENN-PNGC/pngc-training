@@ -24,6 +24,7 @@ if not GITHUB_TOKEN:
 
 
 def get_most_recent_registration_issue():
+
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github+json",
@@ -88,21 +89,41 @@ def add_course_to_readme(course):
     semester_header = f"#### {course['semester']}"
     # If year or semester section does not exist, add it
     if year_header not in content:
-        # Add year section before the ---
-        content = content.replace(
-            "\n---",
-            f"\n{year_header}\n\n{semester_header}\n\n- *(No courses yet)*\n\n---",
-        )
-    if semester_header not in content:
-        # Add semester section under the year
+        # Add year section before the --- separator (or at end if not present)
+        if "\n---" in content:
+            content = content.replace(
+                "\n---",
+                f"\n{year_header}\n\n{semester_header}\n\n- *(No courses yet)*\n\n---",
+            )
+        else:
+            content = (
+                content
+                + f"\n{year_header}\n\n{semester_header}\n\n- *(No courses yet)*\n"
+            )
+    elif semester_header not in content:
+        # Add semester section under the year header
         content = content.replace(
             year_header, f"{year_header}\n\n{semester_header}\n\n- *(No courses yet)*"
         )
+
     # Add bullet for the course under the semester
-    pattern = rf"({re.escape(semester_header)}\\n)([\s\S]*?)(?=\n#### |\n### |\n---|\Z)"
+    pattern = rf"({re.escape(semester_header)}\n)([\s\S]*?)(?=\n#### |\n### |\n---|\Z)"
     match = re.search(pattern, content)
     if not match:
-        raise Exception("Semester section not found in README.md")
+        # As a fallback, try to locate the year header and append the semester block there
+        year_pattern = rf"({re.escape(year_header)}\n)([\s\S]*?)(?=\n### |\n---|\Z)"
+        year_match = re.search(year_pattern, content)
+        if year_match:
+            insert_at = year_match.end(1)
+            # Build a semester block
+            semester_block = f"{semester_header}\n\n- *(No courses yet)*\n"
+            content = content[:insert_at] + "\n" + semester_block + content[insert_at:]
+            match = re.search(pattern, content)
+    # If still not found, raise but include debug context
+    if not match:
+        raise Exception(
+            "Semester section not found in README.md after attempted insertion"
+        )
     before = match.group(1)
     section = match.group(2)
     # Remove placeholder if present

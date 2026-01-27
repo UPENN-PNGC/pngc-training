@@ -2,12 +2,12 @@ name: Update PNGC Training Courses
 
 on:
   issues:
-    types: [closed]
+    types: [labeled]
 
 jobs:
   update-courses:
     if: |
-      contains(github.event.issue.labels.*.name, 'approved') && contains(github.event.issue.labels.*.name, 'registration')
+      github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'registration')
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub App installation token
@@ -44,24 +44,18 @@ jobs:
           branch: course-update/${{ github.run_id }}
           title: "Add or update course in README and folders"
           body: "Automated course registration update."
-          labels: auto-merge
 
-      - name: Wait for status checks
-        uses: lewagon/wait-on-check-action@v1.3.3
-        with:
-          ref: course-update/${{ github.run_id }}
-          repo-token: ${{ steps.app-token.outputs.token }}
-          wait-interval: 10
-
-      - name: Merge PR with App token
-        if: steps.cpr.outputs.pull-request-url != ''
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ steps.app-token.outputs.token }}
-          script: |
-            await github.rest.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: Number('${{ steps.cpr.outputs.pull-request-number }}'),
-              merge_method: 'squash'
-            });
+      - name: Notify submitter of approval and PR
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_CREATOR: ${{ github.event.issue.user.login }}
+          PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+          BRANCH_NAME: course-update/${{ github.run_id }}
+        run: |
+          COMMENT_BODY="Hi @${ISSUE_CREATOR}, your course registration has been **approved**!\n\nA branch ([4m${BRANCH_NAME}[0m) and a pull request have been created: ${PR_URL}\n\nPlease add your course materials to the new folder and update the PR as needed. When ready, set the label to \"ready for review\".\n\nThank you!"
+          curl -s -X POST \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments \
+            -d "{\"body\": \"${COMMENT_BODY//\"/\\\"}\"}"
