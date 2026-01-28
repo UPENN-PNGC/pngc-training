@@ -36,6 +36,7 @@ git sparse-checkout set spring_2026_ai_assisted_coding_and_co_pilot_workflows
 
 - [Vellum AI LLM Leaderboard (coding-specific performance)](https://www.vellum.ai/llm-leaderboard)
 - [Best LLMs for coding: developer favorites](https://codingscape.com/blog/best-llms-for-coding-developer-favorites)
+- [1,001 Real World Gen AI Use Cases (Google Cloud)](https://cloud.google.com/transform/101-real-world-generative-ai-use-cases-from-industry-leaders)
 - [Deep Dive into LLMs](https://www.youtube.com/watch?v=7xTGNNLPyMI) - video
 - [Prompt Engineering Overview](https://cloud.google.com/discover/what-is-prompt-engineering)
 - [Prompt Engineering Guide](https://www.promptingguide.ai/techniques)
