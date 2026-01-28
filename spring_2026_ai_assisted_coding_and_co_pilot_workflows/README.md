@@ -32,6 +32,14 @@ git sparse-checkout set spring_2026_ai_assisted_coding_and_co_pilot_workflows
 
 > **Note:** The free tier of Copilot in VSCode will enable you to follow along with most of the demo.  If you want to explore Agentic AI tools along with me(running tests, direct code edits), you will need to sign up for the one month free trial of the Pro version: <https://github.com/github-copilot/pro>.  You will need a GitHub account to do this.  
 
+## Recommended Reading
+
+- [Vellum AI LLM Leaderboard (coding-specific performance)](https://www.vellum.ai/llm-leaderboard)
+- [Best LLMs for coding: developer favorites](https://codingscape.com/blog/best-llms-for-coding-developer-favorites)
+- [Deep Dive into LLMs](https://www.youtube.com/watch?v=7xTGNNLPyMI) - video
+- [Prompt Engineering Overview](https://cloud.google.com/discover/what-is-prompt-engineering)
+- [Prompt Engineering Guide](https://www.promptingguide.ai/techniques)
+
 ---
 
 ## Discussion
