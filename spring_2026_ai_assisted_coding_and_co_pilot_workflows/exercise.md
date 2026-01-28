@@ -80,7 +80,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 6) Test
+#### 6) Assert Outcomes
 
 | Decent | Better |
 |---|---|
@@ -102,7 +102,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 8) Document
+#### 8) Codify Usage
 
 | Decent | Better |
 |---|---|
