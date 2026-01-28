@@ -125,13 +125,13 @@ Not all these files are need for this task but are made available in case you wa
 - Leverage Copilot’s context awareness by keeping related files open in your workspace.
 - use [# prefixed keywords](#using--prefixed-keywords-in-copilot) to guide behavior and define contexts
 
-### The .github/COPILOT.md File (for personal repositories)
+### GitHub instruction files (for personal repositories)
 
-You can guide GitHub Copilot’s behavior for your entire repository by adding a `.github/COPILOT.md` file. This markdown file contains prompt instructions, coding guidelines, or project-specific context that Copilot will use to generate more relevant code suggestions.  
+You can guide GitHub Copilot’s behavior for your entire repository by adding instructions files for Copilot. This markdown file contains prompt instructions, coding guidelines, or project-specific context that Copilot will use to generate more relevant code suggestions.  
 
 **Best practices:**
 
-- Place `.github/COPILOT.md` at the root of your repository or in the `.github` directory.
+- Place `.github/copilot-instructions.md` at the root of your repository in the `.github` directory.
 - Use clear, concise language to describe your coding standards, naming conventions, or architectural patterns.
 - Include example prompts or code snippets to illustrate preferred solutions.
 - Update the file as your project evolves to keep Copilot suggestions aligned with your needs.
@@ -165,3 +165,7 @@ GitHub Copilot recognizes special # prefixed keywords in prompts and code commen
 - `#config`, `#settings`: Indicate configuration or settings-related code.
 
 Use these keywords in your prompts or comments to make Copilot more effective and context-aware during code generation, testing, documentation, and workflow automation.
+
+### Read the Docs
+
+<https://code.visualstudio.com/docs/copilot/overview>
