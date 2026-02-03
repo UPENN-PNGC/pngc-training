@@ -38,9 +38,9 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-## Task Prompt Guide
+### Task Prompt Guide
 
-#### 1) Let AI do the breakdown
+#### 1. Let AI do the breakdown
 
 | Decent | Better |
 |---|---|
@@ -48,15 +48,15 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 2) Move straight to the code
+#### 2. Move straight to the code
 
 | Decent | Better |
 |---|---|
-| Write code to validate a VCF against a reference FASTA and count variant types. | Using the defined steps, write a minimal, runnable implementation that reads a VCF and reference FASTA, checks REF alleles against the reference sequence, reports mismatches, and counts SNVs, insertions, and deletions. No abstractions or refactoring. |
+| Write code to validate a VCF against a reference FASTA and count variant types. | Using the defined steps, write a minimal, runnable implementation that reads a VCF and reference FASTA and validates against the reference sequence. No abstractions or refactoring. |
 
 ---
 
-#### 3) React to gaps
+#### 3. React to gaps
 
 | Decent | Better |
 |---|---|
@@ -64,7 +64,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 4) Constrain behavior
+#### 4. Constrain behavior
 
 | Decent | Better |
 |---|---|
@@ -72,7 +72,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 5) Push correctness
+#### 5. Push correctness
 
 | Decent | Better |
 |---|---|
@@ -80,7 +80,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 6) Assert Outcomes
+#### 6. Assert Outcomes
 
 | Decent | Better |
 |---|---|
@@ -94,7 +94,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 7) Refactor after success
+#### 7. Refactor after success
 
 | Decent | Better |
 |---|---|
@@ -102,7 +102,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 8) Codify Usage
+#### 8. Codify Usage
 
 | Decent | Better |
 |---|---|
@@ -110,7 +110,7 @@ Not all these files are need for this task but are made available in case you wa
 
 ---
 
-#### 9) Demonstrate usage in a notebook
+#### 9. Demonstrate usage in a notebook
 
 | Decent | Better |
 |---|---|

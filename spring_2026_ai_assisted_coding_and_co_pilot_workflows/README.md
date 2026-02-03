@@ -14,6 +14,14 @@ Binder is a free, cloud-based service that lets you launch interactive Jupyter n
 
 ---
 
+## Course Exercise
+
+An course exercise was provided (see [exercise.md](exercise.md)).  An example workflow (with chats) and supporting scripts leading to a solution for this challenge is now available in the [example_exercise_result](./example_exercise_result/) directory.  See the [README](./example_exercise_result/README.md) in that directory for details and chat workflows.
+
+**Launch the Binder** (click above) to try out the `VCFValidator` we generated.
+
+---
+
 ## Course Requirements
 
 To fully illustrate the capabilities of Conversational and Agentic AI to enable AI-assisted coding, we will be using Copilot in Visual Studio Code.  To be able to actively participate in discussions and demo activities, you will need to bring a laptop and make sure you have installed the following software.  
