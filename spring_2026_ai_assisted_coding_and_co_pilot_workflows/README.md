@@ -18,7 +18,7 @@ Binder is a free, cloud-based service that lets you launch interactive Jupyter n
 
 An course exercise was provided (see [exercise.md](exercise.md)).  An example workflow (with chats) and supporting scripts leading to a solution for this challenge is now available in the [example_exercise_result](./example_exercise_result/) directory.  See the [README](./example_exercise_result/README.md) in that directory for details and chat workflows.
 
-**Launch the Binder** (click above) to try out the `VCFValidator` we generated.
+**Launch the Binder** (click above) to try out the `VCFValidator` we generated. Or just view the static [playground notebook](playground.ipynb).
 
 ---
 
