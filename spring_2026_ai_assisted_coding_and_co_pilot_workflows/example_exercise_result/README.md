@@ -14,7 +14,7 @@ Each section contains a chat log with starting point prompts and chat responses/
 Answer prompt <prompt number>.
 ```
 
-> This document is rather long, to help navigate in VSCode, you can use the [Explorer -> Outline View](https://code.visualstudio.com/docs/getstarted/userinterface#_outline-view) as a table of contents.
+> This document is rather long, to help navigate in VSCode, you can use the [Explorer -> Outline View](https://code.visualstudio.com/docs/getstarted/userinterface#_outline-view) as a table of contents.  If viewing on GitHub, there should be an auto-generated table of contents.
 
 > For a more readable version in VSCode, install a markdown extension with a `preview` view. If you do not have a markdown extension installed, I recommend [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one).
 
