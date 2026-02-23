@@ -30,7 +30,7 @@ def get_most_recent_registration_issue():
         "Accept": "application/vnd.github+json",
     }
     params = {
-        "state": "closed",
+        "state": "open",
         "labels": "registration",
         "sort": "updated",
         "direction": "desc",
