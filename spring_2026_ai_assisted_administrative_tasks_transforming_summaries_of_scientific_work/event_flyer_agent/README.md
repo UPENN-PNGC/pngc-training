@@ -121,11 +121,11 @@ python agent.py --backend openai
 Requirements: A running Ollama server with a compatible model installed. See the [Ollama docs](https://ollama.com/docs) for installation and model setup.
 
 ```bash
-# using default model (llama3)
+# using default model (tinyllama)
 python agent.py --backend ollama
 
 # or specify a different model
-python agent.py --backend ollama --ollama-model neural-chat
+python agent.py --backend ollama --ollama-model mistral
 ```
 
 ### First run

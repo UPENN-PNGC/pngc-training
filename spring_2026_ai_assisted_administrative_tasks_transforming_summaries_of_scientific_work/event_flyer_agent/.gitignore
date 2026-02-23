@@ -1,2 +1,6 @@
 credentials.json
 token.json
+event_dropbox/**
+!event_dropbox/.gitkeep
+processed/**
+!processed/.gitkeep
