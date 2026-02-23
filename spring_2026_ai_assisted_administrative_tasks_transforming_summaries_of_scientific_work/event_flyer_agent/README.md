@@ -1,8 +1,36 @@
+
 # Event Flyer Agent
 
-## Generating Google Calendar API credentials (updated)
+## Overview
 
-Google Cloud's UI changes frequently. These instructions follow the current flow (Feb 2026) and avoid UI-specific menu names that move around.
+This agent automates the extraction of event details from flyers (PDFs or images) and creates Google Calendar events.
+
+### Features
+
+- Automated folder watching for new event flyers (handles race conditions)
+- OCR and text extraction from PDFs and images
+- LLM-based structured data extraction (OpenAI or Ollama backend)
+- Hybrid/virtual/in-person event logic (venue, meeting link, or both)
+- Timezone normalization for calendar compatibility
+- Google Calendar event creation with OAuth authentication
+
+### Agent Workflow
+
+![Graphical workflow; see agent.py docstring for details](./event-flyer-agent-workflow-23opni.png)
+
+## Getting Started
+
+## Requirements
+
+- Python 3.10+
+- Goolge Calendar API credentials
+- One of the following:
+  - [Ollama](https://ollama.com/) (**Recommended Ollama model:** `mistral`)
+  - OpenAI API key
+
+## Generating Google Calendar API credentials
+
+Google Cloud's UI changes frequently. These instructions follow the flow as of Feb 2026
 
 High-level steps you'll perform:
 
@@ -10,6 +38,7 @@ High-level steps you'll perform:
 - Enable the Google Calendar API for that project
 - Configure the OAuth consent screen (if required)
 - Create an OAuth client ID (Desktop app) and download the JSON
+- (optional) Edit your `credentials.json` to target a specific calendar
 
 Detailed steps:
 
@@ -85,9 +114,9 @@ Security
 - Never share client secret values in public repositories.
 - Use a separate Google Cloud project for development/testing if possible.
 
-## Installation
+### Installation
 
-### Create virtual environment and install dependencies
+#### Create virtual environment and install dependencies
 
 ```bash
 # create and activate a venv
@@ -132,7 +161,7 @@ python agent.py --backend ollama --ollama-model mistral
 
 On first run, the script will open a browser to complete Google OAuth and will write a `token.json` file with the calendar OAuth tokens. Keep this file private; it stores your access/refresh token.
 
-### Notes
+## Notes
 
 - Supported file types: `.pdf`, `.jpg`, `.jpeg`, `.png`, `.tiff`, `.bmp`, `.gif`
 - The agent monitors `event_dropbox/` folder for new files

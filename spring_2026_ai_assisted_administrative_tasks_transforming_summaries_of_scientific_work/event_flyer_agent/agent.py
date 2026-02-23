@@ -181,13 +181,12 @@ Rules:
     if not content:
         raise ValueError("LLM returned empty response")
 
-    print(f"\n[DEBUG] LLM raw response:\n{content}\n")
-
     try:
         result = json.loads(content)
         return result
     except json.JSONDecodeError as e:
         # If JSON parsing fails, raise error with details
+        # TODO: attempt to fix, maybe w/LLM
         raise ValueError(
             f"Failed to parse JSON from LLM response: {e}\nResponse was:\n{content}"
         )
@@ -380,7 +379,6 @@ class Handler(FileSystemEventHandler):
         try:
             text = read_document(path)
             event_data = extract_event(text)
-            print(f"DEBUG {event_data}")
             create_event(event_data)
 
             # Save extracted event JSON to processed folder
