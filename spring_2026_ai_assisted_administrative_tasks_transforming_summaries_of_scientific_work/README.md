@@ -1,4 +1,5 @@
 # AI-Assisted Administrative Tasks - Transforming Summaries of Scientific Work
+
     ## Description
     AI tools can assist with non-coding research tasks such as lay summaries, presentations, funding updates, email drafts, and report formatting. This seminar explores pitfalls (oversimplification, factual loss, tone mismatch, fabricated details), prompt strategies (role prompts, structured context input, prompt chaining, format templates), and basic agent concepts (reusable templates that transform scientific content through repeated stages).
 
@@ -12,7 +13,7 @@
     ---
 
     ## Course Materials
-    - *(Notebooks and code will be listed here as they are added)*
+    - *event_flyer_agent*: example command line agent (Python) that parses event details from PDF or image fliers and adds to a Goolge calendar
 
     ---
 
