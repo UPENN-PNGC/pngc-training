@@ -14,9 +14,4 @@
 
     ## Course Materials
     - *event_flyer_agent*: example command line agent (Python) that parses event details from PDF or image fliers and adds to a Goolge calendar
-
-    ---
-
-    ## Discussion
-    [Go to course discussion topic](<discussion-link-placeholder>)
-    
+    - *custom_gpts*: example custom lightweight agents (ChatGPT Custom GPT or Claude Project)
