@@ -22,7 +22,7 @@ This agent automates the extraction of event details from flyers (PDFs or images
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.10+ (3.7+ may work, but is untested and may need alternative versions of the required dependencies)
 - Goolge Calendar API credentials
 - One of the following:
   - [Ollama](https://ollama.com/) (**Recommended Ollama model:** `mistral`)
@@ -116,7 +116,17 @@ Security
 
 ### Installation
 
+#### Clone the Course Folder from GitHub
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/UPENN-PNGC/pngc-training.git
+cd pngc-training
+git sparse-checkout set spring_2026_ai_assisted_administrative_tasks
+```
+
 #### Create virtual environment and install dependencies
+
+In the `event_flyer_agent` directory, do the following:
 
 ```bash
 # create and activate a venv
