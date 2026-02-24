@@ -116,12 +116,12 @@ Security
 
 ### Installation
 
-#### Clone the Course Folder from GitHub
+#### Clone the `event_flyer_agent` folder from GitHub
 
 ```bash
 git clone --filter=blob:none --sparse https://github.com/UPENN-PNGC/pngc-training.git
 cd pngc-training
-git sparse-checkout set spring_2026_ai_assisted_administrative_tasks
+git sparse-checkout set spring_2026_ai_assisted_administrative_tasks/event_flyer_agent
 ```
 
 #### Create virtual environment and install dependencies
