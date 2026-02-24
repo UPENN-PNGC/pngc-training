@@ -19,7 +19,7 @@ No Binder environment selected for this course.
 The following directories contain supporting materials (code and AI Agent instructions) for interactive class demos.
 
 - *event_flyer_agent*: example command line agent (Python) that parses event details from PDF or image fliers and adds to a Goolge calendar
-- *custom_gpts*: example custom lightweight agents (ChatGPT Custom GPT or Claude Project)
+- *custom_gpts*: instructions for defining custom lightweight agents (ChatGPT Custom GPT)
 
 ### Requirements
 
