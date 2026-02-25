@@ -20,6 +20,7 @@ The agent will:
 5. Score each paper for relevance
 6. Rank results
 7. Summarize only the most relevant papers
+8. Provide PMID and link to Pubmed for each summarized or top ranked paper
 
 ---
 
