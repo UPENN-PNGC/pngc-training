@@ -41,7 +41,7 @@ See agent [README](./event_flyer_agent/README.md) for details and installation i
 
 ## Additional Resources
 
-### No-code Agents
+### No/low-code Agents
 - [n8n](https://n8n.io)
 - [Flowise](https://flowiseai.com)
 - [Zapier](https://zapier.com)
