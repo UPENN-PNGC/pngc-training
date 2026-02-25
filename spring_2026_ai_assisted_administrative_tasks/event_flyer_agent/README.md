@@ -164,7 +164,7 @@ Requirements: A running Ollama server with a compatible model installed. See the
 python agent.py --backend ollama
 
 # or specify a different model
-python agent.py --backend ollama --ollama-model mistral
+python agent.py --backend ollama --model mistral
 ```
 
 ### First run
