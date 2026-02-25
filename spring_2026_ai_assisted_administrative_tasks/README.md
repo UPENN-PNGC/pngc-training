@@ -21,6 +21,16 @@ The following directories contain supporting materials (code and AI Agent instru
 - *event_flyer_agent*: example command line agent (Python) that parses event details from PDF or image fliers and adds to a Goolge calendar
 - *custom_gpts*: instructions for defining custom lightweight agents (ChatGPT Custom GPT)
 
+ > For the `Project Description Rewriter` the following should work as acceptable input to test all modes:
+
+ ```text
+We will analyze whole-genome sequencing data and clinical diagnosis information from participants enrolled in an Alzheimer’s disease research cohort. 
+The dataset includes age at onset, sex, APOE genotype, and longitudinal cognitive assessment scores. 
+No new data will be collected. 
+Researchers will access the coded dataset through a controlled-access repository, and direct identifiers are not provided to investigators. 
+The goal is to evaluate associations between rare variants and disease progression trajectories.
+```
+
 ### Requirements
 
 To fully explore lightweight AI agents during the seminar, we will be using **ChatGPT**.  To be able to actively participate in demo activities, you will need to bring a laptop and have registered for either a ChatGPT or ChatGPT Edu account.  You can also following along with **Claude**, which offers similar functionality.  
