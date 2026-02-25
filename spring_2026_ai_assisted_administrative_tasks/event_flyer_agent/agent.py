@@ -146,7 +146,7 @@ JSON:
   "date": "YYYY-MM-DD",
   "start_time": "H:MM AM/PM",
   "end_time": "H:MM AM/PM",
-  "timezone": "timezone or abbreviation",
+  "timezone": "timezone or abbreviation (or null if not mentioned)",
   "venue": "physical location or null",
   "meeting_link": "Zoom/Teams/etc URL or null",
   "description": "brief description"
@@ -157,7 +157,8 @@ Rules:
 - No comments, no // or /* */ 
 - Every field must have a value (use null if missing, not "null" string)
 - Every field must be followed by a comma except the last field
-- Do not guess. Extract actual URLs for meeting links."""
+- Do not guess. Extract actual URLs for meeting links.
+- For timezone: ONLY extract if explicitly mentioned in the flyer. Use null if not mentioned."""
 
     if llm_backend == "openai":
         resp = openai_client.chat.completions.create(
@@ -226,9 +227,9 @@ def get_calendar_config():
     if not timezone:
         try:
             cal_settings = service.calendarList().get(calendarId=calendar_id).execute()
-            timezone = cal_settings.get("timeZone", "UTC")
+            timezone = cal_settings.get("timeZone", None)
         except Exception:
-            timezone = "UTC"
+            timezone = None
 
     return calendar_id, timezone
 
@@ -238,7 +239,10 @@ calendar_id, calendar_timezone = get_calendar_config()
 
 # ---------- TIMEZONE MAPPING ----------
 def normalize_timezone(tz_str):
-    """Convert timezone abbreviation or name to IANA timezone."""
+    """Convert timezone abbreviation or name to IANA timezone.
+    
+    Returns the calendar's timezone if tz_str is None or empty.
+    """
     if not tz_str:
         return calendar_timezone
 
@@ -261,7 +265,9 @@ def normalize_timezone(tz_str):
     }
 
     tz_upper = tz_str.upper().strip()
-    return tz_map.get(tz_upper, tz_str)
+    # Return mapped timezone or original string (already IANA format)
+    # If not found in map, return calendar_timezone as fallback
+    return tz_map.get(tz_upper, calendar_timezone if tz_upper == "NONE" or tz_upper == "NULL" else tz_str)
 
 
 def create_event(data):
@@ -292,15 +298,9 @@ def create_event(data):
     description = "\n".join(filter(None, description_parts))
 
     # Parse times in event timezone, convert to calendar timezone
-    event_tz = data.get("timezone") or calendar_timezone
-    event_tz = normalize_timezone(event_tz)  # Convert abbreviations to IANA names
-
-    try:
-        tz = ZoneInfo(event_tz) if event_tz != "UTC" else ZoneInfo("UTC")
-    except Exception:
-        tz = ZoneInfo("UTC")
-        event_tz = "UTC"
-
+    event_tz = normalize_timezone(data.get("timezone"))  # Convert abbreviations to IANA names
+    tz = ZoneInfo(event_tz) 
+    
     start_str = f"{data['date']} {data['start_time']}"
     end_str = f"{data['date']} {data['end_time']}"
 
@@ -351,6 +351,13 @@ def wait_for_file_ready(path, timeout=10, check_interval=0.5):
 
 class Handler(FileSystemEventHandler):
     """Handles file creation events in the watch directory."""
+    
+    def __init__(self):
+        super().__init__()
+        # Track processed files to avoid duplicate processing
+        # This is necessary because Windows-to-WSL file saves create :Zone.Identifier
+        # metadata files that trigger duplicate on_created events after file is moved
+        self.processed_files = set()
 
     def on_created(self, event):
         # Accept PDF and image files
@@ -369,6 +376,11 @@ class Handler(FileSystemEventHandler):
             return
 
         path = Path(event.src_path)
+        
+        # Skip if already processed (prevents duplicate processing from zone identifier events)
+        if str(path) in self.processed_files:
+            return
+        
         print("Processing:", path.name)
 
         # Wait for file to be fully written
@@ -386,7 +398,18 @@ class Handler(FileSystemEventHandler):
             with open(json_path, "w") as f:
                 json.dump(event_data, f, indent=2)
 
+            # Remove Windows zone identifier metadata file if it exists
+            # These are created by Windows-to-WSL file transfers and cannot be deleted directly
+            # Instead, we use subprocess to attempt removal via system call
+            zone_id_path = str(path) + ":Zone.Identifier"
+            try:
+                import subprocess
+                subprocess.run(["rm", "-f", zone_id_path], check=False, timeout=2)
+            except Exception:
+                pass  # Silently ignore if removal fails
+            
             path.rename(PROCESSED_DIR / path.name)
+            self.processed_files.add(str(path))
             print("Done\n")
 
         except Exception as e:
@@ -394,17 +417,25 @@ class Handler(FileSystemEventHandler):
 
 
 # ---------- MAIN ----------
-def run(backend="openai"):
+def run(backend="openai", default_timezone=None):
     """Start the file watcher."""
+    global calendar_timezone
+    
+    # Override calendar timezone if specified
+    if default_timezone:
+        calendar_timezone = default_timezone
+    
     WATCH_DIR.mkdir(exist_ok=True)
     PROCESSED_DIR.mkdir(exist_ok=True)
 
     observer = Observer()
-    observer.schedule(Handler(), str(WATCH_DIR), recursive=False)
+    handler = Handler()
+    observer.schedule(handler, str(WATCH_DIR), recursive=False)
     observer.start()
 
     print(f"Watching folder: {WATCH_DIR}")
     print(f"Using backend: {backend}")
+    print(f"Calendar timezone: {calendar_timezone}")
 
     try:
         while True:
@@ -433,6 +464,11 @@ if __name__ == "__main__":
         "--openai-key",
         help="OpenAI API key (or use OPENAI_API_KEY environment variable)",
     )
+    parser.add_argument(
+        "--timezone",
+        default=None,
+        help="Default timezone for calendar events (e.g., America/New_York, America/Los_Angeles). Uses calendar's timezone if not specified.",
+    )
 
     args = parser.parse_args()
 
@@ -444,4 +480,4 @@ if __name__ == "__main__":
     init_llm_backend(args.backend, openai_api_key=args.openai_key)
 
     # Run the agent
-    run(backend=args.backend)
+    run(backend=args.backend, default_timezone=args.timezone)

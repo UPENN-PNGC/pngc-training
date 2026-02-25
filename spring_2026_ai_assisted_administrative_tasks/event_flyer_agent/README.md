@@ -86,7 +86,7 @@ Example `credentials.json` (template — replace with values Google provides):
 }
 ```
 
-**Note on `calendar_id`:** The optional `calendar_id` field specifies which Google Calendar events are added to. If omitted, events are added to your primary (default) calendar. Calendar IDs vary by type:
+**Note on `calendar_id`:** Add the optional `calendar_id` field to your `credentials.json` to specify which Google Calendar events are added to. If omitted, events are added to your primary (default) calendar. Calendar IDs vary by type:
 
 - Personal Gmail calendar: your email address (e.g., `user@gmail.com`)
 - Custom calendar: UUID-like ID (e.g., `abc123def456@group.calendar.google.com`)
@@ -97,6 +97,8 @@ To find your calendar's ID:
 - Go to Settings > Calendars
 - Click the calendar you want to use
 - Scroll to "Calendar ID" and copy it
+
+**Note on `timezone`:** Add the optional `timezone` field to your `credentials.json` to specify the default timezone for events when the flyer does not include timezone information. Use IANA timezone names (e.g., `America/New_York`, `America/Los_Angeles`, `Europe/London`). If omitted, the calendar's timezone setting is used, if set. If not, it defaults to `America/New_York`. You can also override the timezone at runtime with the `--timezone` command-line flag.
 
 Troubleshooting & notes
 
