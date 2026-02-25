@@ -1,0 +1,47 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PubMed Literature API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+    }
+  ],
+  "paths": {
+    "/esearch.fcgi": {
+      "get": {
+        "operationId": "searchPubMed",
+        "description": "Search PubMed and return PubMed IDs",
+        "parameters": [
+          {"name": "db", "in": "query", "required": true, "schema": {"type": "string", "example": "pubmed"}},
+          {"name": "term", "in": "query", "required": true, "schema": {"type": "string"}},
+          {"name": "retmax", "in": "query", "schema": {"type": "integer", "default": 20}},
+          {"name": "retmode", "in": "query", "schema": {"type": "string", "default": "json"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "PubMed search results"
+          }
+        }
+      }
+    },
+    "/efetch.fcgi": {
+      "get": {
+        "operationId": "fetchAbstracts",
+        "description": "Fetch article abstracts",
+        "parameters": [
+          {"name": "db", "in": "query", "required": true, "schema": {"type": "string", "example": "pubmed"}},
+          {"name": "id", "in": "query", "required": true, "schema": {"type": "string"}},
+          {"name": "retmode", "in": "query", "schema": {"type": "string", "default": "xml"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "PubMed abstract data"
+          }
+        }
+      }
+    }
+  }
+}
