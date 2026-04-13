@@ -4,6 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pandas = "*"
+alphagenome = "*"
+matplotlib = "*"
+ipywidgets = "*"
+iprogress = "*"
+itables = "*"
+ipykernel = "*"
 
 [dev-packages]
 

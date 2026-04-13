@@ -1,7 +1,0 @@
-pandas
-alphagenome
-matplotlib
-ipywidgets
-iprogress
-itables
-ipykernel
