@@ -6,15 +6,13 @@ AlphaGenome offers multimodal predictions, encompassing diverse functional outpu
 
 ---
 
-## Binder
+## Exercises
 
-Binder is a free, cloud-based service that lets you launch interactive Jupyter notebooks and other environments directly from this repository, with no local installation required. Use the button below to launch a ready-to-use environment for this course.
-
-[![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/UPENN-PNGC/pngc-training/HEAD?urlpath=lab/tree/spring_2026_using_alphagenome_introductory_practical_session)
+* Interactive Notebook on [Colab](https://colab.research.google.com/github/UPENN-PNGC/pngc-training/blob/main/spring_2026_using_alphagenome_introductory_practical_session/alphagenome_intro_practical.ipynb)
 
 ---
 
-## Course Materials
+## Additional Reading
 
 - [AlphaGenome API](https://github.com/google-deepmind/alphagenome) (Preview) - all the instructions you need to get started:
   - Get an API Key
