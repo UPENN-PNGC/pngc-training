@@ -4,3 +4,4 @@ matplotlib
 ipywidgets
 iprogress
 itables
+ipykernel
